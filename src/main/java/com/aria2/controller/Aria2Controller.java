@@ -21,9 +21,9 @@ public class Aria2Controller {
     Aria2Bll aria2Bll;
 
     @PostMapping("/push")
-    public String push(@RequestBody Map<String, String> person){
-      String url =   person.get("name");
-      String fileName = person.get("fileName");
+    public String push(@RequestBody Map<String, String> file){
+      String url =   file.get("url");
+      String fileName = file.get("name");
       return   aria2Bll.pushUrl(url,fileName);
     }
 
