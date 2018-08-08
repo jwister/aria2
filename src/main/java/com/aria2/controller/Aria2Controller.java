@@ -3,6 +3,7 @@ package com.aria2.controller;
 import com.aria2.bll.Aria2Bll;
 import com.aria2.bll.CatchBll;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -22,11 +23,18 @@ public class Aria2Controller {
 
     @Autowired
     CatchBll catchBll;
+
+    @Value("${aria2.path}")
+    private String path;
+
+    @Value("${aria2.jsonpc}")
+    private String jsonpc;
+
     @PostMapping("/push")
     public String push(@RequestBody Map<String, String> file){
       String url =   file.get("url");
       String fileName = file.get("name");
-      return   aria2Bll.pushUrl(url,fileName);
+      return   aria2Bll.pushUrl(jsonpc,path,url,fileName);
     }
 
     @PostMapping("/test")
@@ -36,10 +44,10 @@ public class Aria2Controller {
         return  url;
     }
 
-    @PostMapping("/catch")
-    public String catchUrl(@RequestBody Map<String, String> file){
+    @GetMapping("/catch")
+    public String catchUrl(){
         catchBll.CatchUrl();
-        return  "";
+        return  "任务已经启动";
     }
 
 

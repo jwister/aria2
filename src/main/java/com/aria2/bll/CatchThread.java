@@ -9,6 +9,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,12 +19,17 @@ public class CatchThread extends Thread{
     private int start;
     private int end;
     private String url;
+    private String jsonpc;
+    private String path;
 
 
-    public CatchThread(int start, int end, String url ) {
+
+    public CatchThread(int start, int end, String url ,String jsonpc,String path) {
         this.start = start;
         this.end = end;
         this.url = url;
+        this.jsonpc = jsonpc;
+        this.path = path;
 
     }
 
@@ -32,6 +38,7 @@ public class CatchThread extends Thread{
         long startTime = System.currentTimeMillis();// 记录开始时间
         long endTime = System.currentTimeMillis();// 记录结束时间
         float excTime = (float) (endTime - startTime) / 1000;
+        Aria2Bll aria2Bll = new Aria2Bll();
         for (int i = start; i < end; i++) {
             Document pagedoc = null;
             System.out.println("当前采集地址：" + url + "/recent/" + i);
@@ -61,6 +68,17 @@ public class CatchThread extends Thread{
             startTime = System.currentTimeMillis();// 记录开始时间
 
             for (String detail : dirlst) {
+              int numActive =  aria2Bll.getActiveNum(jsonpc);
+                while (numActive>=3) {
+                    System.out.println("当前下载数量已到达3个！暂停新增任务");
+                  try {
+                      Thread.sleep(3000);
+                      numActive =  aria2Bll.getActiveNum(jsonpc);
+                  }catch (Exception e){
+                      e.printStackTrace();
+                  }
+                }
+
                 Document detaildoc = null;
                 try {
                     detaildoc = Jsoup.connect(url + detail).get();
@@ -82,8 +100,9 @@ public class CatchThread extends Thread{
                     } finally {
                         // db.closeconnection();
                     }
-
                     System.out.println(title + ":" + linkHref);
+                    aria2Bll.pushUrl(jsonpc,path,linkHref,title+".mp4");
+
                     hm.put(title, linkHref);
                 }
             }
