@@ -37,12 +37,6 @@ public class Aria2Controller {
       return   aria2Bll.pushUrl(jsonpc,path,url,fileName);
     }
 
-    @PostMapping("/test")
-    public String test(@RequestBody Map<String, String> file){
-        String url =   file.get("url");
-        String fileName = file.get("name");
-        return  url;
-    }
 
     @GetMapping("/catch")
     public String catchUrl(){
