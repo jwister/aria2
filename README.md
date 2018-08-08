@@ -29,9 +29,14 @@ http://ip:端口/aria2/catch
 2.添加下载任务
 接口：  post请求   http://ip:端口/aria2/push  
      入参
+     
      {
     "name":"白皙性感的小美女被各种姿势爆操-绵羊般的叫声响彻房间了她最后只好用整只手了.mp4",
     "url":"http://malong.tabletennis2018.com/media/videos/mp4/33436.mp4?st=MYPCxOCPa7O38ZGjYC6cmw&e=1533714192"
     }
       
+      
+      
+ 运行：
+  java -jar aria2-0.0.1-SNAPSHOT.jar
 
