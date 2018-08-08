@@ -1,4 +1,4 @@
-package com.aria2.aria2;
+package com.aria2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

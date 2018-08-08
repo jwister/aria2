@@ -2,7 +2,6 @@ package com.aria2.controller;
 
 import com.aria2.bll.Aria2Bll;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -26,5 +25,14 @@ public class Aria2Controller {
       String fileName = file.get("name");
       return   aria2Bll.pushUrl(url,fileName);
     }
+
+    @PostMapping("/test")
+    public String test(@RequestBody Map<String, String> file){
+        String url =   file.get("url");
+        String fileName = file.get("name");
+        return  url;
+    }
+
+
 
 }
