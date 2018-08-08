@@ -1,3 +1,5 @@
+server:
+  port: 8855
 aria2:
   path: /mnt/media/av
   jsonpc: http://yaaw.ijianyou.cn:6800/jsonrpc
