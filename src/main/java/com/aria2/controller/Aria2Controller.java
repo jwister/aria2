@@ -1,6 +1,7 @@
 package com.aria2.controller;
 
 import com.aria2.bll.Aria2Bll;
+import com.aria2.bll.CatchBll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,8 @@ public class Aria2Controller {
     @Autowired
     Aria2Bll aria2Bll;
 
+    @Autowired
+    CatchBll catchBll;
     @PostMapping("/push")
     public String push(@RequestBody Map<String, String> file){
       String url =   file.get("url");
@@ -33,6 +36,11 @@ public class Aria2Controller {
         return  url;
     }
 
+    @PostMapping("/catch")
+    public String catchUrl(@RequestBody Map<String, String> file){
+        catchBll.CatchUrl();
+        return  "";
+    }
 
 
 }
